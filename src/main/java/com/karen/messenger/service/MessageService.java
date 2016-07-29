@@ -3,30 +3,64 @@ package com.karen.messenger.service;
 
 import java.util.List;
 
-import com.karen.messenger.dao.MessageDAO;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 import com.karen.messenger.model.Message;
 
 public class MessageService {
-	MessageDAO msdao = new MessageDAO();
+	SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 	
 	public List<Message> getAllMessages() {
-		return msdao.getAll();
+		Session session = sessionFactory.openSession();
+        session.beginTransaction();
+         
+        List<Message> messages = (List<Message>) session.createQuery( "from Message" ).list();
+         
+        session.getTransaction().commit();
+        session.close();
+        return messages;
 	}
 	
 	public Message getMessage(long id) {
-		return msdao.getById(id);
+		Session session = sessionFactory.openSession();
+        session.beginTransaction();
+         
+        Message message = (Message) session.get(Message.class, id);
+         
+        session.getTransaction().commit();
+        session.close();
+        return message;
 	}
 	
 	public void addMessage(Message message) {
-		msdao.add(message);
+		Session session = sessionFactory.openSession();
+        session.beginTransaction();
+         
+      	session.save(message);
+         
+        session.getTransaction().commit();
+        session.close();
 	}
 	
 	public void updateMessage(Message message) {
-		msdao.update(message);
+		Session session = sessionFactory.openSession();
+        session.beginTransaction();
+         
+      	session.update(message);
+         
+        session.getTransaction().commit();
+        session.close();
 	}
 	
 	public void removeMessage(long id) {
-		msdao.delete(id);
+		Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        Message message =  session.get(Message.class, id);
+        session.delete(message);
+         
+        session.getTransaction().commit();
+        session.close();
 	}
 }

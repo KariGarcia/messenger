@@ -1,8 +1,14 @@
 package com.karen.messenger.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Message {
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class Message implements Serializable {
+	@Id
 	private long id;
     private String message;
     private Date created;

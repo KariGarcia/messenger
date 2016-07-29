@@ -1,9 +1,14 @@
 package com.karen.messenger.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Comment {
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
+@Entity
+public class Comment implements Serializable {
+	@Id
 	private long id;
 	private long messageId;
     private String message;

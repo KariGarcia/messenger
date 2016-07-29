@@ -1,14 +1,22 @@
 package com.karen.messenger.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Profile {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
+@Entity
+public class Profile implements Serializable {
+	
+	@Id
 	private long id;
+	
+	@Column(unique=true)
     private String profileName;
     private String firstName;
     private String lastName;
-    private Date created;
     
     public Profile() {
     	
@@ -45,11 +53,5 @@ public class Profile {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public Date getCreated() {
-		return created;
-	}
-	public void setCreated(Date created) {
-		this.created = created;
-	}
-    
+
 }
